@@ -11,7 +11,7 @@ const password = ref(null);
 const login = async () => {
   const parameter = {
     username: account.value,
-    password: password.value,
+    password: password.value
   };
   await axios.post(`${apiUrl}/admin/signin`, parameter).then((res) => {
     const { token, expired } = res.data;

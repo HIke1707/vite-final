@@ -7,7 +7,7 @@ module.exports = {
   extends: [
     'plugin:vue/vue3-essential',
     'eslint:recommended',
-    'airbnb-base',
+    'standard',
   ],
   overrides: [
   ],
@@ -33,5 +33,8 @@ module.exports = {
     'vue',
   ],
   rules: {
+    "quotes": [0, "single"],
+    "max-len": ["warn", { "code": 150 }],
+    "semi": ["error", "always"]
   },
 };

@@ -9,46 +9,46 @@ const routes = [
       {
         path: '',
         name: 'LoginVue',
-        component: () => import('../views/admin/LoginVue.vue'),
+        component: () => import('../views/admin/LoginVue.vue')
       },
       {
         path: 'products',
         name: 'Product',
-        component: () => import('../views/admin/AdminProductList.vue'),
+        component: () => import('../views/admin/AdminProductList.vue')
       },
       {
         path: 'uploadpic',
         name: 'UploadPic',
-        component: () => import('../views/admin/UpLoadPic.vue'),
+        component: () => import('../views/admin/UpLoadPic.vue')
       },
       {
         path: 'order',
         name: 'OrderManagement',
-        component: () => import('../views/admin/OrderManagement.vue'),
+        component: () => import('../views/admin/OrderManagement.vue')
       },
       {
         path: 'coupon',
         name: 'CouponManagement',
-        component: () => import('../views/admin/CouponManagement.vue'),
+        component: () => import('../views/admin/CouponManagement.vue')
       },
       {
         path: 'article',
         name: 'ArticleManagement',
-        component: () => import('../views/admin/ArticleManagement.vue'),
-      },
-    ],
+        component: () => import('../views/admin/ArticleManagement.vue')
+      }
+    ]
   },
   {
     path: '/about',
     name: 'About',
-    component: () => import('../views/AboutView.vue'),
-  },
+    component: () => import('../views/AboutView.vue')
+  }
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   linkActiveClass: 'active',
-  routes,
+  routes
 });
 
 export default router;
