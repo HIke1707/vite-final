@@ -1,0 +1,1 @@
+import{o,r as t,b as s,c as n,F as a,d as e}from"./index-ZyHefE6V.js";const r=e("p",null,"頁面不存在",-1),c=e("p",null,"3秒後跳轉畫面",-1),d={__name:"NotFound",setup(u){return o(()=>{setTimeout(()=>{t.push("/login")},3e3)}),(_,l)=>(s(),n(a,null,[r,c],64))}};export{d as default};
