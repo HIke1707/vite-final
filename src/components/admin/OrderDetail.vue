@@ -31,6 +31,18 @@ const hideModal = () => {
   }
 };
 
+// 時間格式轉換
+const timeformatter = (stamp) => {
+  const date = new Date(stamp);
+  const year = date.getFullYear();
+  const month = ('0' + (date.getMonth() + 1)).slice(-2); // 月份从0开始，所以要加1
+  const day = ('0' + date.getDate()).slice(-2);
+  const hours = ('0' + date.getHours()).slice(-2);
+  const minutes = ('0' + date.getMinutes()).slice(-2);
+  const seconds = ('0' + date.getSeconds()).slice(-2);
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
+
 const updateModal = async () => {
   const url = `${apiUrl}/api/${apiPath}/admin/order/${data.value.id}`;
   let result = false;
@@ -108,7 +120,7 @@ defineExpose({
                       <td class="t-title">訂單編號</td>
                       <td>{{ data?.id }}</td>
                       <td class="t-title">訂單時間</td>
-                      <td>{{ data?.create_at }}</td>
+                      <td>{{ timeformatter(data?.create_at) }}</td>
                     </tr>
                     <tr>
                       <td class="t-title">總價格</td>

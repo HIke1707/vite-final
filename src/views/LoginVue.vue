@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import router from '../router';
 
 // const axios = inject('axios');
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -16,9 +17,9 @@ const login = async () => {
   await axios.post(`${apiUrl}/admin/signin`, parameter).then((res) => {
     const { token, expired } = res.data;
     document.cookie = `hextoken=${token}; expires=${new Date(expired)}; path=/`;
-    window.location = '#/admin/products';
+    router.push('admin/products');
   })
-    .catch((err) => { console.debug(err); });
+    .catch(() => { alert("登入失敗"); });
 };
 </script>
 

@@ -35,7 +35,6 @@ const addProduct = async () => {
     .then((res) => {
       const { success } = res.data;
       result = success;
-      console.log("addProduct", result);
     })
     .catch((err) => {
       alert(JSON.stringify(err));
@@ -54,7 +53,6 @@ const updateProduct = async () => {
     .then((res) => {
       const { success } = res.data;
       result = success;
-      console.log("update", result);
     })
     .catch((err) => {
       alert(JSON.stringify(err));

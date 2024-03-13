@@ -69,7 +69,7 @@ defineExpose({
       <div class="modal-content border-0">
         <div class="modal-header bg-danger text-white">
           <h5 id="delOrderModalLabel" class="modal-title">
-            <span>刪除產品</span>
+            <span>刪除訂單</span>
           </h5>
           <button
             type="button"
@@ -80,8 +80,8 @@ defineExpose({
         </div>
         <div class="modal-body">
           是否刪除
-          <strong class="text-danger"></strong> 商品{{
-            propitem.title
+          <strong class="text-danger"></strong> 訂單{{
+            propitem.id
           }}(刪除後將無法恢復)。
         </div>
         <div class="modal-footer">

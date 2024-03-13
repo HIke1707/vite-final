@@ -7,11 +7,6 @@ const routes = [
     component: () => import('../views/admin/Admin_Layout.vue'),
     children: [
       {
-        path: '',
-        name: 'LoginVue',
-        component: () => import('../views/admin/LoginVue.vue')
-      },
-      {
         path: 'products',
         name: 'Product',
         component: () => import('../views/admin/AdminProductList.vue')
@@ -39,9 +34,18 @@ const routes = [
     ]
   },
   {
+    path: '/login',
+    name: 'LoginVue',
+    component: () => import('../views/LoginVue.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import('../views/AboutView.vue')
+  },
+  {
+    path: '/:catchAll(.*)*',
+    component: () => import('../views/NotFound.vue')
   }
 ];
 

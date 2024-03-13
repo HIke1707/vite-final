@@ -32,22 +32,11 @@ const seeDetail = (product) => {
 const getProducts = async (page = 1) => {
   const url = `${apiUrl}/api/${apiPath}/admin/products?page=${page}`;
   await axios.get(url).then((res) => {
-    console.log(res);
     const resProducts = res.data.products;
     products.value = Object.entries(resProducts).map(([id, obj]) => ({ id, ...obj }));
     pagination.value = res.data.pagination;
   })
-    .catch((err) => { console.log(err); });
-};
-// 檢查登入狀態
-const checkAuth = async () => {
-  const url = `${apiUrl}/api/user/check`;
-  let result = false;
-  await axios.post(url).then((res) => {
-    const { success } = res.data;
-    result = success;
-  }).catch((err) => { alert(err.message); });
-  return result;
+    .catch((err) => { console.debug(err); });
 };
 // 關閉跳窗
 const closeModal = () => {
@@ -71,20 +60,7 @@ const openModal = (type, item) => {
 };
 // onmounted hook
 onMounted(() => {
-  const cookieValue = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("hextoken="))
-    ?.split("=")[1];
-  axios.defaults.headers.common.Authorization = cookieValue;
-  console.log(cookieValue);
-  checkAuth().then((res) => {
-    if (res) {
-      getProducts();
-    } else {
-      alert("請登入");
-      window.location = "#/login";
-    }
-  });
+  getProducts();
 });
 
 </script>

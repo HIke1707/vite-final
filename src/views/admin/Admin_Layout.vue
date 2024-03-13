@@ -19,10 +19,10 @@
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-item nav-link me-4" href="./product.html"><RouterLink to="/admin/products">商品管理</RouterLink></a>
-              <a class="nav-item nav-link me-4" href="./detail.html"><RouterLink to="/admin/order">訂單管理</RouterLink></a>
-              <a class="nav-item nav-link me-4" href="./detail.html"><RouterLink to="/admin/coupon">優惠券管理</RouterLink></a>
-              <a class="nav-item nav-link" href="./cart.html"><i class="fas fa-shopping-cart"></i></a>
+              <RouterLink class="nav-link" to="/admin/products">商品管理</RouterLink>
+              <RouterLink class="nav-link" to="/admin/order">訂單管理</RouterLink>
+              <RouterLink class="nav-link" to="/admin/coupon">優惠券管理</RouterLink>
+              <a href="#" @click.prevent="logout" class="nav-link">登出</a>
             </div>
           </div>
         </nav>
@@ -40,4 +40,47 @@
 </template>
 
 <script setup>
+import axios from "axios";
+import router from '../../router';
+import { onMounted } from "vue";
+
+const apiUrl = import.meta.env.VITE_API_URL;
+
+// 檢查登入狀態
+const checkAuth = async () => {
+  const url = `${apiUrl}/api/user/check`;
+  let result = false;
+  await axios.post(url).then((res) => {
+    const { success } = res.data;
+    result = success;
+  }).catch((err) => { alert(err.message); });
+  return result;
+};
+
+const logout = () => {
+  const api = `${apiUrl}/logout`;
+  axios.post(api)
+    .then((response) => {
+      document.cookie = `hextoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+      alert("登出成功");
+      router.push('/login');
+    }).catch(() => {
+      alert("登出失敗");
+    });
+};
+
+// onmounted hook
+onMounted(() => {
+  const cookieValue = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("hextoken="))
+    ?.split("=")[1];
+  axios.defaults.headers.common.Authorization = cookieValue;
+  checkAuth().then((res) => {
+    if (!res) {
+      alert("請登入");
+      router.push("/login");
+    }
+  });
+});
 </script>

@@ -28,31 +28,8 @@ const uploadFile = () => {
   });
 };
 
-// 檢查登入狀態
-const checkAuth = async () => {
-  const url = `${apiUrl}/api/user/check`;
-  let result = false;
-  await axios.post(url).then((res) => {
-    const { success } = res.data;
-    result = success;
-  }).catch((err) => { alert(err.message); });
-  return result;
-};
-
 // onmounted hook
 onMounted(() => {
-  const cookieValue = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("hextoken="))
-    ?.split("=")[1];
-  axios.defaults.headers.common.Authorization = cookieValue;
-  console.log(cookieValue);
-  checkAuth().then((res) => {
-    if (!res) {
-      alert("請登入");
-      window.location = "#/login";
-    }
-  });
 });
 </script>
 
