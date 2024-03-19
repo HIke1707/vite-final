@@ -7,6 +7,28 @@ const apiPath = import.meta.env.VITE_API_PATH;
 
 const props = defineProps(["id"]);
 const product = ref({});
+const amount = ref(1);
+
+// 變動數量
+const updateAmount = (type) => {
+  if (amount.value <= 1 && type === "-") {
+    return false;
+  }
+  amount.value = type === "+" ? amount.value + 1 : amount.value - 1;
+};
+
+const addToCart = (id) => {
+  const url = `${apiUrl}/api/${apiPath}/cart`;
+  const cartData = {
+    product_id: id,
+    qty: amount.value
+  };
+  axios.post(url, { data: cartData }).then((response) => {
+    alert('商品加入購物車成功');
+  }).catch((err) => {
+    alert(err.response.data.message);
+  });
+};
 
 onMounted(async () => {
   await axios.get(`${apiUrl}/api/${apiPath}/product/${props.id}`).then((res) => {
@@ -51,20 +73,24 @@ onMounted(async () => {
                 <div class="col-6">
                 <div class="input-group my-3 bg-light rounded">
                     <div class="input-group-prepend">
-                    <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1">
+                    <button @click="updateAmount('-')" class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1">
                         <i class="fas fa-minus"></i>
                     </button>
                     </div>
-                    <input type="text" class="form-control border-0 text-center my-auto shadow-none bg-light" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value="1">
+                    <input type="text"
+                    class="form-control border-0 text-center my-auto shadow-none bg-light"
+                    placeholder="" aria-label="Example text with button addon"
+                    aria-describedby="button-addon1"
+                    v-model="amount">
                     <div class="input-group-append">
-                    <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2">
+                    <button @click="updateAmount('+')" class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2">
                         <i class="fas fa-plus"></i>
                     </button>
                     </div>
                 </div>
                 </div>
                 <div class="col-6">
-                <a href="./checkout.html" class="text-nowrap btn btn-dark w-100 py-2">加入購物車</a>
+                <a @click="addToCart(product.id)" class="text-nowrap btn btn-dark w-100 py-2">加入購物車</a>
                 </div>
             </div>
         </div>

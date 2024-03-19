@@ -1,6 +1,11 @@
 <script setup>
 import { computed, onMounted } from 'vue';
 import { useCartStore } from '../../stores/cartStores';
+import axios from 'axios';
+import debounce from "lodash/debounce";
+
+const apiUrl = import.meta.env.VITE_API_URL;
+const apiPath = import.meta.env.VITE_API_PATH;
 
 const cartStore = useCartStore();
 
@@ -10,8 +15,51 @@ const cart = computed({
   }
 });
 
+// 變動數量
+const updateItemqty = (item, type) => {
+  if (type === "+") {
+    item.qty = item.qty + 1;
+  } else if (item.qty > 1 && type === "-") {
+    item.qty = item.qty - 1;
+  } else {
+    return false;
+  }
+  updateCartItem(item.id, item.product.id, item.qty);
+};
+
+// 更新購物車
+const updateCartItem = debounce((cartId, productId, qty = 1) => {
+  const url = `${apiUrl}/api/${apiPath}/cart/${cartId}`;
+  const data = {
+    product_id: productId,
+    qty: qty
+  };
+  axios
+    .put(url, { data: data })
+    .then((response) => {
+      alert(response.data.message);
+      cartStore.getCart();
+    })
+    .catch((err) => {
+      alert(err.response.data.message);
+    });
+}, 500);
+
+// 清除購物車內產品
+const removeCartItem = (id) => {
+  const url = `${apiUrl}/api/${apiPath}/cart/${id}`;
+  axios
+    .delete(url)
+    .then((response) => {
+      alert(response.data.message);
+      cartStore.getCart();
+    })
+    .catch((err) => {
+      alert(err.response.data.message);
+    });
+};
+
 onMounted(() => {
-  console.log(cart.value);
   cartStore.getCart();
 });
 </script>
@@ -41,7 +89,7 @@ onMounted(() => {
                   <td class="border-0 align-middle" style="max-width: 160px;">
                     <div class="input-group pe-5">
                       <div class="input-group-prepend">
-                        <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1">
+                        <button @click="updateItemqty(item, '-')" class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1">
                           <i class="fas fa-minus"></i>
                         </button>
                       </div>
@@ -51,14 +99,18 @@ onMounted(() => {
                       aria-describedby="button-addon1"
                       v-model="item.qty">
                       <div class="input-group-append">
-                        <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2">
+                        <button @click="updateItemqty(item, '+')" class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2">
                           <i class="fas fa-plus"></i>
                         </button>
                       </div>
                     </div>
                   </td>
                   <td class="border-0 align-middle"><p class="mb-0 ms-auto">{{ item?.total }}</p></td>
-                  <td class="border-0 align-middle"><i class="fas fa-times"></i></td>
+                  <td class="border-0 align-middle">
+                    <button @click="removeCartItem(item.id)" class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -83,7 +135,7 @@ onMounted(() => {
                 <p class="mb-0 h4 fw-bold">{{ cart.final_total }}</p>
               </div>
               <RouterLink :to="'/products'"><a class="btn btn-dark w-50 mt-4">返回購物</a></RouterLink>
-              <a class="btn btn-dark w-50 mt-4 ml-1">前往結賬</a>
+              <RouterLink :to="'/checkout'"><a class="btn btn-dark w-50 mt-4">前往結賬</a></RouterLink>
             </div>
           </div>
         </div>
