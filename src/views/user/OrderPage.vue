@@ -3,6 +3,10 @@ import { computed, onMounted, ref } from 'vue';
 import { useCartStore } from '../../stores/cartStores';
 import axios from 'axios';
 import router from '../../router';
+import { useToastMessageStore } from "@/stores/toastMessage";
+
+const toastMessageStore = useToastMessageStore();
+const { pushMessage } = toastMessageStore;
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const apiPath = import.meta.env.VITE_API_PATH;
@@ -30,7 +34,11 @@ const formRef = ref(null);
 
 const createOrder = () => {
   if (cart.value.carts.length === 0) {
-    alert('購物車內沒有商品');
+    pushMessage({
+      style: 'warning',
+      title: '系統訊息',
+      content: '購物車內沒有商品'
+    });
     return;
   }
   const url = `${apiUrl}/api/${apiPath}/order`;
@@ -39,12 +47,16 @@ const createOrder = () => {
     .post(url, { data: order })
     .then((response) => {
       cartStore.getCart();
-      router.push('/checkout_success');
+      router.push(`/payment/${response.data.orderId}`);
       form.value.message = "";
       formRef.value.resetForm();
     })
     .catch((err) => {
-      alert(err.response.data.message);
+      pushMessage({
+        style: 'error',
+        title: '系統訊息',
+        content: err.response.data.message
+      });
     });
 };
 
@@ -80,7 +92,7 @@ onMounted(() => {
           <div class="w-100">
             <div class="d-flex justify-content-between">
               <p class="mb-0 fw-bold">{{ item?.product?.title }}</p>
-              <p class="mb-0">NT${{ item?.final_total }}</p>
+              <p class="mb-0">NT${{ item?.total }}</p>
             </div>
             <p class="mb-0 fw-bold">x{{ item?.qty }}</p>
           </div>
@@ -89,7 +101,13 @@ onMounted(() => {
           <tbody>
             <tr>
               <th scope="row" class="border-0 px-0 pt-4 font-weight-normal">total</th>
-              <td class="text-end border-0 px-0 pt-4">NT${{ cart.final_total }}</td>
+              <td class="text-end border-0 px-0 pt-4">NT${{ cart.total }}</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <p v-if="cart.carts"><span>已套用優惠券</span>
+                  <span class="color-danger">{{ cart.carts[0]?.coupon.code }}</span></p>
+              </td>
             </tr>
           </tbody>
         </table>

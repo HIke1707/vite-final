@@ -7,6 +7,11 @@ const routes = [
     component: () => import('../views/user/UserLayout.vue'),
     children: [
       {
+        path: '',
+        name: 'UserHome',
+        component: () => import('../views/user/UserHome.vue')
+      },
+      {
         path: '/products',
         name: 'UserProducts',
         component: () => import('../views/user/UserProducts.vue')
@@ -26,6 +31,12 @@ const routes = [
         path: '/checkout',
         name: 'checkout',
         component: () => import('../views/user/OrderPage.vue')
+      },
+      {
+        path: '/payment/:id',
+        name: 'payment',
+        component: () => import('../views/user/PaymentPage.vue'),
+        props: true
       },
       {
         path: '/checkout_success',

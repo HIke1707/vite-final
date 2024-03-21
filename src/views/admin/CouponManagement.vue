@@ -6,7 +6,7 @@ class Coupon {
   constructor (data) {
     this.title = data?.title ?? "";
     this.is_enabled = data?.is_enabled ?? 0;
-    this.percent = data?.percent ?? 0;
+    this.percent = data?.percent ?? 1000;
     this.discount = data?.discount ?? 0;
     this.due_date = data?.due_date ?? 0;
     this.code = data?.code ?? "";

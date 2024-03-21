@@ -1,23 +1,45 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
+import { useToastMessageStore } from "@/stores/toastMessage";
+import PaginationVue from '@/components/admin/PaginationVue.vue';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const apiPath = import.meta.env.VITE_API_PATH;
 
+const toastMessageStore = useToastMessageStore();
+const { pushMessage } = toastMessageStore;
+
 const productTypes = ref(["所有商品", "盒玩", "模型", "寶可夢 (Pokémon.)", "航海王(ONE PIECE)", "蠟筆小新"]);
 const products = ref([]);
 const focusCategory = ref("");
+const pagination = ref({});
 
 onMounted(async () => {
-  await axios.get(`${apiUrl}/api/${apiPath}/products/all`).then((res) => {
-    products.value = res.data.products;
-  });
+  getProducts();
 });
+
+const getProducts = async (page = 1) => {
+  await axios.get(`${apiUrl}/api/${apiPath}/products?category=${focusCategory.value}&page=${page}`).then((res) => {
+    products.value = res.data.products;
+    pagination.value = res.data.pagination;
+    pushMessage({
+      style: 'success',
+      title: '系統訊息',
+      content: `取得商品分類:${focusCategory.value === '' ? '所有商品' : focusCategory.value}`
+    });
+  });
+};
 
 watch(focusCategory, async (value) => {
   await axios.get(`${apiUrl}/api/${apiPath}/products?category=${value}`).then((res) => {
     products.value = res.data.products;
+    pagination.value = res.data.pagination;
+    pushMessage({
+      style: 'success',
+      title: '系統訊息',
+      content: `取得商品分類:${value === '' ? '所有商品' : value}`
+    });
   });
 });
 </script>
@@ -32,7 +54,7 @@ watch(focusCategory, async (value) => {
   <div class="row">
     <div class="col-md-3" v-for="product in products" :key="product.id">
       <div class="card border-0 mb-4 position-relative position-relative">
-        <img :src="product.imageUrl" class="card-img-top rounded-0" alt="...">
+        <img :src="product.imageUrl" class="card-img-top rounded-0" alt="..." style="width: 300px; height:300px;object-fit: cover;">
         <!-- <a href="#" class="text-dark">
           <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
         </a> -->
@@ -46,5 +68,7 @@ watch(focusCategory, async (value) => {
       </div>
     </div>
   </div>
+  <!-- 分頁元件 -->
+  <PaginationVue :pages="pagination" @emit-pages="getProducts"></PaginationVue>
 </div>
 </template>

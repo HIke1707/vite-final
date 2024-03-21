@@ -49,7 +49,7 @@ const closeModal = () => {
 
 // 時間格式轉換
 const timeformatter = (stamp) => {
-  const date = new Date(stamp);
+  const date = new Date(stamp * 1000);
   const year = date.getFullYear();
   const month = ('0' + (date.getMonth() + 1)).slice(-2); // 月份从0开始，所以要加1
   const day = ('0' + date.getDate()).slice(-2);

@@ -1,8 +1,12 @@
 <script setup>
-import { computed, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useCartStore } from '../../stores/cartStores';
 import axios from 'axios';
 import debounce from "lodash/debounce";
+import { useToastMessageStore } from "@/stores/toastMessage";
+
+const toastMessageStore = useToastMessageStore();
+const { pushMessage } = toastMessageStore;
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const apiPath = import.meta.env.VITE_API_PATH;
@@ -37,11 +41,19 @@ const updateCartItem = debounce((cartId, productId, qty = 1) => {
   axios
     .put(url, { data: data })
     .then((response) => {
-      alert(response.data.message);
+      pushMessage({
+        style: 'success',
+        title: '系統訊息',
+        content: response.data.message
+      });
       cartStore.getCart();
     })
     .catch((err) => {
-      alert(err.response.data.message);
+      pushMessage({
+        style: 'error',
+        title: '發生錯誤',
+        content: err.response.data.message
+      });
     });
 }, 500);
 
@@ -51,11 +63,42 @@ const removeCartItem = (id) => {
   axios
     .delete(url)
     .then((response) => {
-      alert(response.data.message);
+      pushMessage({
+        style: 'success',
+        title: '系統訊息',
+        content: response.data.message
+      });
       cartStore.getCart();
     })
     .catch((err) => {
-      alert(err.response.data.message);
+      pushMessage({
+        style: 'error',
+        title: '發生錯誤',
+        content: err.response.data.message
+      });
+    });
+};
+
+const couponCode = ref("");
+
+// 套用優惠券
+const getCoupon = () => {
+  const url = `${apiUrl}/api/${apiPath}/coupon`;
+  axios.post(url, { data: { code: couponCode.value } })
+    .then((res) => {
+      pushMessage({
+        style: 'success',
+        title: '系統訊息',
+        content: res.data.message
+      });
+      cartStore.getCart();
+    })
+    .catch((err) => {
+      pushMessage({
+        style: 'error',
+        title: '發生錯誤',
+        content: err.response.data.message
+      });
     });
 };
 
@@ -122,11 +165,18 @@ onMounted(() => {
                 <tbody>
                   <tr>
                     <th scope="row" class="border-0 px-0 pt-4 font-weight-normal">總計</th>
-                    <td class="text-end border-0 px-0 pt-4">{{ cart.final_total }}</td>
+                    <td class="text-end border-0 px-0 pt-4">{{ cart.total }}</td>
                   </tr>
                   <tr>
                     <th scope="row" class="border-0 px-0 pt-0 pb-4 font-weight-normal">運費</th>
                     <td class="text-end border-0 px-0 pt-0 pb-4">NT$0</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      優惠碼 : <input type="text" v-model="couponCode" @change="getCoupon()"/>
+                      <p v-if="cart?.carts"><span>已套用優惠券</span>
+                        <span class="color-danger">{{ cart.carts[0]?.coupon.code }}</span></p>
+                    </td>
                   </tr>
                 </tbody>
               </table>
