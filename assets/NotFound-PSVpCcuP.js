@@ -1,1 +1,0 @@
-import{i as o,m as t,a as s,o as n,F as a,b as e}from"./index-kTR-d31H.js";const r=e("p",null,"頁面不存在",-1),u=e("p",null,"3秒後跳轉畫面",-1),m={__name:"NotFound",setup(_){return o(()=>{setTimeout(()=>{t.push("/login")},3e3)}),(c,l)=>(n(),s(a,null,[r,u],64))}};export{m as default};

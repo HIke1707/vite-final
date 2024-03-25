@@ -1,1 +1,0 @@
-import{p as e,h as o}from"./index-kTR-d31H.js";import{a as r}from"./axios-G2rPRu76.js";const s="https://ec-course-api.hexschool.io/v2",c="yangapi",n=e("counterStore",{state:()=>({cart:o({})}),actions:{getCart(){const a=`${s}/api/${c}/cart`;r.get(a).then(t=>{this.cart=t.data.data}).catch(t=>{alert(t.response.data.message)})}}});export{n as u};
