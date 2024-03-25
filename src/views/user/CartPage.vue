@@ -175,7 +175,7 @@ onMounted(() => {
                     <td colspan="2">
                       優惠碼 : <input type="text" v-model="couponCode" @change="getCoupon()"/>
                       <p v-if="cart?.carts"><span>已套用優惠券</span>
-                        <span class="color-danger">{{ cart.carts[0]?.coupon.code }}</span></p>
+                        <span class="color-danger">{{ cart.carts[0]?.coupon?.code }}</span></p>
                     </td>
                   </tr>
                 </tbody>

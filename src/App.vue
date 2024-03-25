@@ -9,7 +9,7 @@ export default {};
 <style lang="scss">
 @import "./assets/all.scss";
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: sans-serif, Avenir, Helvetica, Arial;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;

@@ -2,6 +2,7 @@
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 import { useToastMessageStore } from "@/stores/toastMessage";
+import { useLoveStore } from "@/stores/loveStores";
 import PaginationVue from '@/components/admin/PaginationVue.vue';
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -9,6 +10,9 @@ const apiPath = import.meta.env.VITE_API_PATH;
 
 const toastMessageStore = useToastMessageStore();
 const { pushMessage } = toastMessageStore;
+
+const loveStore = useLoveStore();
+const { toggleLove, loveProducts } = loveStore;
 
 const productTypes = ref(["所有商品", "盒玩", "模型", "寶可夢 (Pokémon.)", "航海王(ONE PIECE)", "蠟筆小新"]);
 const products = ref([]);
@@ -29,6 +33,15 @@ const getProducts = async (page = 1) => {
       content: `取得商品分類:${focusCategory.value === '' ? '所有商品' : focusCategory.value}`
     });
   });
+};
+
+const setLoved = (product) => {
+  toggleLove(product);
+};
+
+const checkLove = (id) => {
+  const ans = loveProducts.some(x => x === id);
+  return ans;
 };
 
 watch(focusCategory, async (value) => {
@@ -55,6 +68,11 @@ watch(focusCategory, async (value) => {
     <div class="col-md-3" v-for="product in products" :key="product.id">
       <div class="card border-0 mb-4 position-relative position-relative">
         <img :src="product.imageUrl" class="card-img-top rounded-0" alt="..." style="width: 300px; height:300px;object-fit: cover;">
+        <button type="button" class="btn btn-light rounded-circle favIcon position-absolute shadow-sm"
+        @click="setLoved(product)" style="top: 5px; right: 10px;">
+          <i v-if="!checkLove(product.id)" class="far fa-heart"></i>
+          <i v-else class="far fa-heart fa-solid text-danger"></i>
+        </button>
         <!-- <a href="#" class="text-dark">
           <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
         </a> -->

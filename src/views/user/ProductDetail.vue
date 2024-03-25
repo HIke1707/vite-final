@@ -2,9 +2,13 @@
 import { ref, defineProps, onMounted } from 'vue';
 import axios from 'axios';
 import { useToastMessageStore } from "@/stores/toastMessage";
+import { useCartStore } from '../../stores/cartStores';
 
 const toastMessageStore = useToastMessageStore();
 const { pushMessage } = toastMessageStore;
+
+const cartStore = useCartStore();
+const { getCart } = cartStore;
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const apiPath = import.meta.env.VITE_API_PATH;
@@ -27,7 +31,8 @@ const addToCart = (id) => {
     product_id: id,
     qty: amount.value
   };
-  axios.post(url, { data: cartData }).then((response) => {
+  axios.post(url, { data: cartData }).then(async (response) => {
+    await getCart();
     pushMessage({
       style: 'success',
       title: '系統訊息',
