@@ -1,1 +1,0 @@
-import{q as t}from"./index-3to8NFAF.js";const d=t("loveStore",{state:()=>({loveProducts:[]}),actions:{toggleLove(e){const o=this.loveProducts.findIndex(s=>s===e.id);o!==-1?this.loveProducts.splice(o,1):this.loveProducts.push(e.id)}}});export{d as u};
