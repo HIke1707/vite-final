@@ -35,6 +35,14 @@ const pageSettings = {
     content: `<h2>Products</h2>`,
     minheight: "50vh"
   },
+  love: {
+    url: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    content: `<h2>My Favorites</h2>
+          <p class="text-muted mb-0">
+            這裡是您的個人收藏室，展示您心愛的玩具、模型和盒玩。每一件商品都承載著您的獨特回憶和情感，是您玩具世界的精華所在。
+          </p>`,
+    minheight: "50vh"
+  },
   default: {
     url: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     content: `<h2>探索無限可能性的玩具世界</h2>

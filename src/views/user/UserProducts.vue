@@ -77,9 +77,9 @@ watch(focusCategory, async (value) => {
           <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i>
         </a> -->
         <div class="card-body p-0">
-          <h4 class="mb-0 mt-3">
+          <h6 class="mb-0 mt-3">
             <router-link :to="'/productsdetail/'+ product.id">{{product.title}}</router-link>
-          </h4>
+          </h6>
           <span class="mt-3" style="color:#c83030;">NT${{product.price}}</span>
           <del style="padding-left: 5px;"> NT${{ product.origin_price }}</del>
         </div>

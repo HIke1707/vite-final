@@ -115,19 +115,21 @@ onMounted(() => {
             <table class="table" style="width: 100%;">
               <thead>
                 <tr>
-                  <th scope="col" class="border-0 ps-0">商品名稱</th>
-                  <th scope="col" class="border-0">單件價格</th>
-                  <th scope="col" class="border-0">數量</th>
-                  <th scope="col" class="border-0">小計</th>
-                  <th scope="col" class="border-0"></th>
+                  <th scope="col" class="border-0 ps-0" style="width:50%">商品名稱</th>
+                  <th scope="col" class="border-0" style="width:10%">單件價格</th>
+                  <th scope="col" class="border-0" style="width:20%">數量</th>
+                  <th scope="col" class="border-0" style="width:10%">小計</th>
+                  <th scope="col" class="border-0" style="width:10%"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="border-bottom border-top" v-for="item in cart.carts" :key="item.id">
-                  <th scope="row" class="border-0 px-0 font-weight-normal py-4">
-                    <img :src="item?.product.imageUrl" alt="" style="width: 72px; height: 72px; object-fit: cover;">
+                  <td scope="row" class="border-0 px-0 font-weight-normal py-4">
+                    <div style="width:100%">
+                      <img :src="item?.product.imageUrl" alt="" style="width: 72px; height: 72px; object-fit: cover;">
+                    </div>
                     <p class="mb-0 fw-bold ms-3 d-inline-block">{{ item?.product?.title }}</p>
-                  </th>
+                  </td>
                   <td class="border-0 align-middle"><p class="mb-0 ms-auto">{{ item?.product?.price }}</p></td>
                   <td class="border-0 align-middle" style="max-width: 160px;">
                     <div class="input-group pe-5">

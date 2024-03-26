@@ -70,11 +70,12 @@
       <img src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?q=80&w=1950&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="img-fluid">
     </div>
     <div class="col-md-4 m-auto text-center">
-      <h4 class="mt-4">各式盒玩</h4>
-      <p class="text-muted">發掘驚奇之旅！盒玩帶您進入充滿挑戰與驚喜的世界，每個組件都是一場冒險的起點。</p>
+      <h4 class="mt-4">品項齊全，價格優惠</h4>
+      <p class="text-muted">瀏覽我們豐富多彩的商品系列，尋找屬於您的獨特收藏。精心挑選的模型、驚險刺激的盒玩，無不展現著高品質與精湛工藝。無論您是收藏家、玩家還是送禮達人，這裡都是您的天堂。立即探索，發掘您的新寶藏，讓玩具陪伴您的每一刻！</p>
+      <RouterLink :to="'/products'" class="btn btn-primary"> 即刻參觀 </RouterLink>
     </div>
   </div>
-  <div class="row flex-row-reverse justify-content-between mt-4">
+  <!-- <div class="row flex-row-reverse justify-content-between mt-4">
     <div class="col-md-6">
       <img src="https://images.unsplash.com/photo-1608889825103-eb5ed706fc64?q=80&w=1950&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="img-fluid">
     </div>
@@ -82,7 +83,7 @@
       <h4 class="mt-4">經典模型</h4>
       <p class="text-muted">打造夢想世界！高品質模型，細緻製作，讓您盡情展現創造力，打造屬於自己的獨特收藏。</p>
     </div>
-  </div>
+  </div> -->
 </div>
 <section class="container-fluid px-0 mb-8 mb-md-7">
   <div class="row g-0 flex-column-reverse flex-md-row">
@@ -92,7 +93,7 @@
             <div class="bg-white shadow-xl p-9 p-md-8 p-lg-9 position-md-absolute bigSaleBanner-body">
               <h3 class="h3 fw-bold mb-4">特惠中</h3>
               <p>即日起只要輸入優惠碼「toyland」即可享全站9折優惠</p>
-              <a class="btn btn-primary"> 前往選購 </a>
+              <RouterLink :to="'/products'" class="btn btn-primary"> 前往選購 </RouterLink>
             </div>
       </div>
     </div>
