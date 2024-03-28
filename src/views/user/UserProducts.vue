@@ -67,7 +67,7 @@ watch(focusCategory, async (value) => {
   <div class="row">
     <div class="col-md-3" v-for="product in products" :key="product.id">
       <div class="card border-0 mb-4 position-relative position-relative">
-        <img :src="product.imageUrl" class="card-img-top rounded-0" alt="..." style="width: 300px; height:300px;object-fit: cover;">
+        <img :src="product.imageUrl" class="card-img-top rounded-0" alt="..." style="max-width: 300px; height:300px;object-fit: cover;">
         <button type="button" class="btn btn-light rounded-circle favIcon position-absolute shadow-sm"
         @click="setLoved(product)" style="top: 5px; right: 10px;">
           <i v-if="!checkLove(product.id)" class="far fa-heart"></i>
