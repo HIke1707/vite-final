@@ -1,0 +1,1 @@
+import{m as o,f as t,o as s,a as n,F as a,b as e}from"./index-1KU6goa1.js";const r=e("p",null,"頁面不存在",-1),u=e("p",null,"3秒後跳轉畫面",-1),m={__name:"NotFound",setup(_){return o(()=>{setTimeout(()=>{t.push("/login")},3e3)}),(c,l)=>(s(),n(a,null,[r,u],64))}};export{m as default};
