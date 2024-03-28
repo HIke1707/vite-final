@@ -98,7 +98,7 @@
       </div>
     </div>
     <div class="col-md-6">
-      <img style="margin: 1%;" src="https://images.unsplash.com/photo-1510194638421-92f54ce46444?q=80&w=2735&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      <img style="" src="https://images.unsplash.com/photo-1510194638421-92f54ce46444?q=80&w=2735&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       alt="瑕疵品圖" class="img-cover img-position-tc w-100">
     </div>
   </div>
